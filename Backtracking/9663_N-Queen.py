@@ -13,17 +13,22 @@ def dfs(board, checked_x, layer):
         if px < N + 1:
             board[layer][px] = 1
 
-    for i, x in enumerate(board[layer][1:]):
-        if x == 1 or checked_x[layer - 1] == i + 1: continue
+    for i, c in enumerate(board[layer][1:]):
+        current_x = i + 1
+        flag = 0
+        for j in checked_x:
+            if current_x == j:
+                flag = 1
+                break
+        if c == 1 or flag == 1: continue
         else:
             if layer == N:
                 board[layer] = [-1 for _ in range(N + 1)]
                 return 1
-            checked_x[layer] = i + 1
+            checked_x[layer] = current_x
             path += dfs(board, checked_x, layer + 1)
             checked_x[layer] = -1
     board[layer] = [-1 for _ in range(N + 1)]
-    checked_x[layer] = -1
     return path
         
 if __name__ == "__main__":
@@ -33,10 +38,9 @@ if __name__ == "__main__":
     path = 0
     for x in range(1, N + 1):
         chessboard = [[-1] * (N + 1) for _ in range(N + 1)]
-        chessboard[1][x] = 1
         checked_x = [-1 for _ in range(N + 1)]
-        checked_x[x] = x
         layer = 1
+        checked_x[layer] = x
         
         path += dfs(chessboard, checked_x, layer + 1)
     print(path)
