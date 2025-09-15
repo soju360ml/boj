@@ -1,21 +1,40 @@
 import sys
 input = sys.stdin.readline
 
-# r의 값 제외, r로부터 계산한 값 제외
 def dfs(r, l, N):
-    l += 1
+    path = 0
+    impossible_x = set()
+    
+    for i, x in enumerate(r):
+        impossible_x.add(x)
+        px = x + l - i
+        mx = x - (l - i)
+        if 0 <= px < N:
+            impossible_x.add(px)
+        if 0 <= mx < N:
+            impossible_x.add(mx)
+
     for i in range(N):
-        if i in r: continue
-        elif i == abs()
+        if i in impossible_x:
+            continue
+        elif l == N - 1:
+            path += 1
+            continue
+        r.append(i)
+        path += dfs(r, l + 1, N)
+        r.pop()
+    return path
     
 
 if __name__ == "__main__":
     N = int(input())
     
     path = 0
-    r = [False * N for _ in range(N)]
-    l = 1
+    r = []
+    l = 0
     
-    for _ in range(N):
-        path += dfs(r, l, N)
+    for i in range(N):
+        r.append(i)
+        path += dfs(r, l + 1, N)
+        r.pop()
     print(path)
