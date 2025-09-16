@@ -1,42 +1,44 @@
+# 이 코드는 백준 9663문제의 최대입력값 14를 입력하면 결과도출까지 35초가 소모된다
+# 시간제한 10초를 해결하기 위해 비트마스킹 테크닉 사용하여 코드를 새로 작성해야 한다
 import sys
 input = sys.stdin.readline
 
-def dfs(col, row, visitedX, N):
+def dfs(row, visitedX, diagonal1, diagonal2, N):
     path = 0
 
     for attemptCol in range(N):
-        # 이미 놓여진 열인 경우 패스
-        if attemptCol in visitedX:
+        # 아래 세 경우 패스한다
+        # 이미 퀸이 놓인 열(visitedX)
+        # 이미 퀸이 놓인 오른쪽 위 -> 왼쪽 아래 대각선(diagonal1): row + colum 일정
+        # 이미 퀸이 놓인 왼쪽 위 -> 오른쪽 아래 대각선(diagonal2): row - colum 일정
+        if attemptCol in visitedX or row + attemptCol in diagonal1 or row - attemptCol in diagonal2:
             continue
 
-        # 대각선 피하기
-        flag = 0
-        for i, v in enumerate(col):
-            if abs(row - i) == abs(attemptCol - v):
-                flag = 1
-                break
-        if flag == 1: continue
-
-        # 마지막 행으로 넘어가기 전일 경우 선점 가능한 열 확인 후 바로 증가경로 확인
+        # 마지막 행인 경우 패스한다
         if row == N - 1:
             path += 1
             continue
 
-        col.append(attemptCol)
         visitedX.add(attemptCol)
-        path += dfs(col, row + 1, visitedX, N)
-        # 선점한 자리를 다시 복구한 후 다음 열 선점 시도
+        diagonal1.add(row + attemptCol)
+        diagonal2.add(row - attemptCol)
+        path += dfs(row + 1, visitedX, diagonal1, diagonal2, N)
+        # 선점한 자리 복구
         visitedX.remove(attemptCol)
-        col.pop()
+        diagonal1.remove(row + attemptCol)
+        diagonal2.remove(row - attemptCol)
     return path
 
 if __name__ == "__main__":
     N = int(input())
     path = 0
-    # 퀸이 놓인 행, 열 => 인덱스, 값
-    col = []
-    # 이미 선점한 열의 집합
-    visitedX = set()
 
-    path += dfs(col, 0, visitedX, N)
+    # 선점한 열
+    visitedX = set()
+    # 선점한 1시 대각선
+    visited_diagonal1 = set()
+    # 선점한 11시 대각선
+    visited_diagonal2 = set()
+
+    path += dfs(0, visitedX, visited_diagonal1, visited_diagonal2, N)
     print(path)
