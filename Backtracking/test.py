@@ -1,10 +1,24 @@
-list_1 = list(range(2))
+n = int(input())
+queen = [0] * n
+result = 0
 
-print(list_1)
+def isAdjecent(idx):
+    for i in range(idx):
+        if queen[idx] == queen[i] or abs(queen[idx] - queen[i]) == idx - i:
+            return False
 
-for i, v in enumerate(list_1):
-    print(i, v)
-    a = list_1.pop(i)
-    list_1.append(v)
+    return True
 
-print(list_1)
+def dfs(idx):
+    if idx == n:
+        global result
+        result += 1
+        return
+
+    for i in range(n):
+        queen[idx] = i
+        if isAdjecent(idx):
+            dfs(idx + 1)
+
+dfs(0)
+print(result)
