@@ -6,10 +6,10 @@ str2 = input().strip()
 prev_dp = [0] * len(str2)
 max = 0
 
-for i, c1 in enumerate(str1):
+for i in range(1, len(str1)):
     cur_dp = [0] * len(str2)
-    for j, c2 in enumerate(str2):
-        if c1 == c2:
+    for j in range(1, len(str2)):
+        if str1[i - 1] == str2[j - 1]:
             if j == 0:
                 cur_dp[j] = 1
             else:
