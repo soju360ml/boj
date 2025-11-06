@@ -1,2 +1,3 @@
-l = [1, 2]
-print('\n'.join(l))
+a = ['Hello', 'hello']
+if 'hello' in a:
+    print('good')
