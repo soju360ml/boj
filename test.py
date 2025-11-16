@@ -1,4 +1,1 @@
-N = tuple(map(int, input().split()))
-
-if all(map(lambda x: x == -1, N)):
-        print('a')
+print(4200 % 500)
