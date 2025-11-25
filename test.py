@@ -1,3 +1,3 @@
-l = [1,2,3]
-for k, value in enumerate(l):
-    print(k, value)
+que = [1]
+if not que:
+    print('good')
