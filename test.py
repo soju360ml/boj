@@ -1,4 +1,5 @@
-print(type(float('inf')))
-a = float('inf')
-if a == float('inf'):
-    print('a')
+from collections import deque
+
+lst = deque([1, 2])
+print(lst.popleft())
+print(list(lst))
