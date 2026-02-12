@@ -1,5 +1,3 @@
-from collections import deque
+import math
 
-lst = deque([1, 2])
-print(lst.popleft())
-print(list(lst))
+print(math.floor(math.sqrt(5)))
