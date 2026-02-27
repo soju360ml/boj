@@ -1,3 +1,3 @@
-import math
-
-print(math.floor(math.sqrt(5)))
+import collections
+source = collections.deque([1,2])
+print(source.popleft())
