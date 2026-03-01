@@ -1,22 +1,19 @@
 import sys
-import collections
-sys.setrecursionlimit(10**6)
 input = sys.stdin.readline
 
 N = int(input())
 
 arr = list(map(int, input().split()))
 stack1 = []
-cur = 1
+cnt = 1
 for i in arr:
-    if i == cur:
-        cur += 1
-        continue
-    elif stack1 and stack1.pop() == cur:
-        cur += 1
-        continue
-    else:
-        stack1.append(i)
+    stack1.append(i)
+    while stack1:
+        if stack1[-1] == cnt:
+            stack1.pop()
+            cnt += 1
+        else:
+            break
 
 if stack1:
     print('Sad')

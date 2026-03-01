@@ -1,3 +1,7 @@
-import collections
-source = collections.deque([1,2])
-print(source.popleft())
+a = {
+    1: {},
+    2: 3
+}
+
+if a[1]:
+    print('g')
