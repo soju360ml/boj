@@ -1,15 +1,16 @@
 import sys
+from itertools import combinations
 input = sys.stdin.readline
 
 N, K = map(int, input().split())
 
 dist = {}
-dist_max = {}
 
 for _ in range(N):
     x, y = map(int, input().split())
     dist[(x, y)] = {}
-    dist_max[(x, y)] = None
+
+combs = combinations(dist.keys(), K)
 
 for k1 in dist:
     for k2 in dist:
@@ -18,11 +19,13 @@ for k1 in dist:
             dist[k1][k2] = abs(k1[0] - k2[0]) + abs(k1[1] - k2[1])
             dist[k2][k1] = dist[k1][k2]
 
+def dist_max():
+    lst = []
+    for comb in combs:
+        tmp = []
+        for pos in dist.keys():
+            tmp.append(min(map(lambda x: dist[x][pos], comb)))
+        lst.append(max(tmp))
+    return min(lst)
 
-for k in dist:
-    dist_max[k] = max(map(lambda x: dist[k][x], dist[k]))
-
-for k1 in dist:
-    for k2 in dist:
-        print(f'dist[{k1}][{k2}]: {dist[k1][k2]}')
-print(dist_max)
+print(dist_max())
