@@ -1,3 +1,3 @@
-for i in range(3):
-    j = 3
-print(j)
+a = [1,2,3,4]
+c, *d, *e = a
+print(c, d, e)
